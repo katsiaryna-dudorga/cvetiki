@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Мои цветы</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/css/style2.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <nav>
+            <div class="navBar">
+                <a href="./">
+                    <h1><span class="lowerLabel">MGKE</span>
+                    <hr>УХОД ЗА РАСТЕНИЯМИ
+                    </h1>
+                </a>
+                <a href="/main">Цветы</a>
+                <a href="http://localhost:3000/table">Расписание</a>
+                <a href="#">Новости</a>
+                <a href="/users">Настройки</a>
+                <a href="#" id="account" >
+                    {{#each curuser}}
+                    <p>{{this.login}}</p>
+                    {{/each}}
+                </a>
+            </div>
+    </nav>
+    <div class="content">
+        <div class="wrapper">
+            <div class="searchBar">
+                <div>
+                    <h4>
+                        <a href="#" class="hide-basic">Поиск&emsp;</a>
+                    </h4>
+                    <div class="searchInput">
+                        <input type="text" onkeyup = "searchFunction()" id="input" placeholder="Фикус">
+                    </div>
+                    <div class="fakeButton" >
+                        <button id="elastic" onclick="searchFunction()">Search</button>
+                    </div>
+                </div>
+            </div> 
+            <div class="boxWrapper">
+                <h3>
+                     <a href="javascript:void(0)" class="show-list"><i class="fa fa-th-list"></i></a>
+                      <a href="javascript:void(0)" class="hide-list"><i class="fa fa-th"></i></a>
+                </h3>
+                <div href="javascript:void(0)" id="plants" class="boxContainer">
+                    
+                   {{#each collection}}
+                        <div class="box">
+                            <img src="{{this.img}}" alt={{this.name}} class="imgBox">
+                            <div class="nameDiv">
+                                <p class="bigText">{{this.name}}</p>
+                            </div>
+                             <div class="btns">
+                                <form action="flowers/delete/{{this.plantId}}" method="POST"> 
+                                <button type="submit" class="deletePlant"><span class="material-icons">cancel</span></button></form> 
+                               
+                                <a href=""></a>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="https://static.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(".show-list").click(function() {
+    $(".boxWrapper").addClass("list-mode");
+    $(".nameDiv").removeClass("boxHr");
+    });
+
+    $(".hide-list").click(function() {
+    $(".boxWrapper").removeClass("list-mode");
+    });
+
+    function searchFunction() {
+    var input, filter, user, box, p, i, txtValue, txtValue2 ;
+    input = document.getElementById("input");
+    filter = input.value.toUpperCase();
+    user = document.getElementById("plants");
+    box = user.getElementsByClassName("box");
+    for (i = 0; i < box.length; i++) {
+        p = box[i].getElementsByClassName("bigText")[0];
+        txtValue = p.innerText;
+        if ((txtValue.toUpperCase().indexOf(filter) > -1)){
+            box[i].style.display = "";
+        } else {
+            box[i].style.display = "none";
+        }
+    }
+
+}
+</script>
+<script src="./app.js"></script>
+</body>
+<html>
