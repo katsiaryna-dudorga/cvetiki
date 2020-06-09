@@ -48,13 +48,18 @@ app.post("/main", urlencodedParser, function (req, res) {
   res.redirect("back");
 });
 
-app.get('/table', function (req, res) { 
-  pool.query("select * FROM curuser",  function(err, data) {
-      if(err) return console.log(err);
-      res.render("table.hbs", {
-        curuser:data
-      }); 
- });
+app.get('/table', urlencodedParser, function (req, res) { 
+  pool.query("select name FROM journal, plant WHERE plant.plantId = journal.plantId group by name", function(err, datas) {
+    pool.query("select date, name FROM journal, plant WHERE plant.plantId = journal.plantId",  function(err, datum) {
+      pool.query("select * FROM curuser",  function(err, data) {
+        if(err) return console.log(err);
+        const date = {plant:datum};
+        res.render("table.hbs", {
+        plant:datum, journal:datum, curuser:data, date, name:datas
+        });
+      });
+    });
+  });
 });
 
 app.get('/news', function (req, res) { 

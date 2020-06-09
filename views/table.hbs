@@ -11,65 +11,68 @@
 </head>
 <body>
   <style>
-#calendarBig { /* весь календарь */ 
+#calendarBig,  #calendarBig2{ /* весь календарь */ 
   width: 100%;
   max-width: 700px;
   margin: 0 auto;
   border-spacing: 0 1.5em;
 }
-#calendarBig td {
+#calendarBig td,  #calendarBig2 td {
   vertical-align: top;
 }
-#calendarBig > thead td:not(:nth-child(2)) { /* предыдущий-следующий года */ 
+#calendarBig > thead td:not(:nth-child(2)),  #calendarBig2 > thead td:not(:nth-child(2)) { /* предыдущий-следующий года */ 
   text-decoration: underline;
   color: rgb(0, 119, 204);
   cursor: pointer;
 }
-#calendarBig > thead td:not(:nth-child(2)):hover { /* если наведён курсор на предыдущий-следующий года */ 
+#calendarBig > thead td:not(:nth-child(2)):hover,  #calendarBig2 > thead td:not(:nth-child(2)):hover { /* если наведён курсор на предыдущий-следующий года */ 
   color: #ff3200;
 }
-#calendarBig > thead td:nth-child(2) { /* текущий год */ 
+#calendarBig > thead td:nth-child(2), #calendarBig2 > thead td:nth-child(2) { /* текущий год */ 
   font-size: 150%;
   font-weight: 700;
   color: rgb(140, 61, 2);
 }
-#calendarBig, #calendarBig table {
+
+
+
+#calendarBig, #calendarBig table, #calendarBig2, #calendarBig2 table{
   font: monospace;
   line-height: 1.2em;
   font-size: 15px;
   text-align: center;
 }
-#calendarBig table { /* таблицы с месяцами выравнены по верхней границе, горизонтально — по центру */ 
+#calendarBig table, #calendarBig2 table { /* таблицы с месяцами выравнены по верхней границе, горизонтально — по центру */ 
   display: inline-table;
 }
-#calendarBig table thead tr:nth-child(1) { /* названия месяцев */ 
+#calendarBig table thead tr:nth-child(1), #calendarBig2 table thead tr:nth-child(1) { /* названия месяцев */ 
   font-size: 110%;
   font-weight: 700;
 }
-#calendarBig table thead tr:last-child { /* название дней недели */ 
+#calendarBig table thead tr:last-child, #calendarBig2 table thead tr:last-child { /* название дней недели */ 
   font-size: small;
   font-weight: 700;
   color: rgb(103, 103, 103);
 }
-#calendarBig table tbody td { /* дни */ 
+#calendarBig table tbody td, #calendarBig2 table tbody td{ /* дни */ 
   color: rgb(44, 86, 122);
 }
-#calendarBig table tbody td:nth-child(n+6), #calendarBig .holiday { /* выходные и праздники */ 
+#calendarBig table tbody td:nth-child(n+6), #calendarBig .holiday, #calendarBig2 table tbody td:nth-child(n+6), #calendarBig2 .holiday { /* выходные и праздники */ 
   color: rgb(231, 140, 92);
 }
-#calendarBig table tbody td.today { /* сегодня */ 
+#calendarBig table tbody td.today, #calendarBig2 table tbody td.today { /* сегодня */ 
   outline: 3px solid red;
 }
-#calendarBig table tbody td[title] { /* выделенные даты */ 
+#calendarBig table tbody td[title], #calendarBig2 table tbody td[title]  { /* выделенные даты */ 
   outline: 3px solid rgb(0, 119, 204);
   background: white;
   cursor: help;
 }
-#calendarBig table tbody td[title] a { /* выделенные даты-ссылки */ 
-  display: block;
+#calendarBig table tbody td[title] a, #calendarBig2 table tbody td[title] a { /* выделенные даты-ссылки */ 
+ /* display: block;*/
   text-decoration: none;
 }
-#calendarBig table tbody td[title] a:hover { /* выделенные даты-ссылки под курсором */
+#calendarBig table tbody td[title] a:hover, #calendarBig2 table tbody td[title] a:hover { /* выделенные даты-ссылки под курсором */
   background: #fde910;
   color: red;
 }
@@ -84,17 +87,20 @@
  font-size: 20px;
 }
 
-</style>
+/* .hide{
+display: none;
+}
+ */</style>
 <nav>
             <div class="navBar">
-                <a href="./main">
+                <a href="./">
                     <h1><span class="lowerLabel">MGKE</span>
                     <hr>УХОД ЗА РАСТЕНИЯМИ
                     </h1>
                 </a>
-                <a href="/flowers">Цветы</a>
+                <a href="/main">Цветы</a>
                 <a href="#">Расписание</a>
-                <a href="/news">Новости</a>
+                <a href="#">Новости</a>
                 <a href="/users">Настройки</a>
                 <a href="#" id="account" >
                     {{#each curuser}}
@@ -198,17 +204,125 @@
         <tbody>
       </table>
 </table>
-
+<form action="/table" method="get" id="form">
+  <select id="section" onchange="selected()">
+    {{#each name}}
+        <option value="{{this.name}}">{{this.name}}</option>
+    {{/each}}
+  </select>
+  <p id="selectedOption" name ="selectedOption">  </p>
+</form>
+<table id="calendarBig2">
+ <thead>
+  <tr><td><td><td>
+ <tbody>
+  <tr>
+    <td>
+      <table data-m="0">
+        <thead>
+          <tr><td colspan="7">Январь
+          <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+        <tbody>
+      </table>
+    <td>
+      <table data-m="1">
+        <thead>
+          <tr><td colspan="7">Февраль
+          <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+        <tbody>
+      </table>
+    <td>
+      <table data-m="2">
+        <thead>
+          <tr><td colspan="7">Март
+          <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+        <tbody>
+      </table>
+  <tr>
+    <td>
+      <table data-m="3">
+        <thead>
+          <tr><td colspan="7">Апрель
+          <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+        <tbody>
+      </table>
+    <td>
+      <table data-m="4">
+        <thead>
+          <tr><td colspan="7">Май
+          <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+        <tbody>
+      </table>
+    <td>
+      <table data-m="5">
+        <thead>
+          <tr><td colspan="7">Июнь
+          <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+        <tbody>
+      </table>
+  <tr>
+    <td>
+      <table data-m="6">
+        <thead>
+          <tr><td colspan="7">Июль
+          <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+        <tbody>
+      </table>
+    <td>
+      <table data-m="7">
+        <thead>
+          <tr><td colspan="7">Август
+          <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+        <tbody>
+      </table>
+    <td>
+      <table data-m="8">
+        <thead>
+          <tr><td colspan="7">Сентябрь
+          <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+        <tbody>
+      </table>
+  <tr>
+    <td>
+      <table data-m="9">
+        <thead>
+          <tr><td colspan="7">Октябрь
+          <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+        <tbody>
+      </table>
+    <td>
+      <table data-m="10">
+        <thead>
+          <tr><td colspan="7">Ноябрь
+          <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+        <tbody>
+      </table>
+    <td>
+      <table data-m="11">
+        <thead>
+          <tr><td colspan="7">Декабрь
+          <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+        <tbody>
+      </table>
+</table>
 <!-- 
 День рождения происходит из года в год, поэтому data-yyyy (год) не указывается.
 Можно чтобы дата была ссылкой на другую страницу, тогда нужно написать data-link (адрес страницы, куда перенаправить пользователя). Одна дата не может вести на несколько страниц [вернее может, но в код нужно внести дополнительные изменения].
 data-dd (день), data-mm (месяц), data-text(сообщение, видимое при наведении курсора мышки) нужно заполнять всегда. Один день может содержать несколько записей, одна дата может иметь только один data-text 
 -->
+<div href="javascript:void(0)" id="calendarTable2">
+
+  
+  {{#each plant}}
+    <div class="box" data-dd="{{getTime this.date 'day'}}" data-mm="{{getTime this.date 'month'}}" data-yyyy="{{getTime this.date 'year'}}" data-text="{{this.name}}"></div>
+  {{/each}}
+  
+</div>
+
 <div id="calendarTable">
    <div data-dd="5" data-mm="1" data-yyyy="2013" data-text="регулярные выражения
 JavaScript примеры" data-link="http://shpargalkablog.ru/2013/07/replace.html"></div>
   <!-- 2019 -->
-  {console.log("hi")}
   <div data-dd="6" data-mm="1" data-yyyy="2019" data-text="Новолуние"></div>
   <div data-dd="14" data-mm="1" data-yyyy="2019" data-text="Первая четверть. Рекомендуется выполнять практически все виды работ, кроме подкормки."></div>
   <div data-dd="21" data-mm="1" data-yyyy="2019" data-text="Полнолуние"></div>
@@ -271,7 +385,7 @@ JavaScript примеры" data-link="http://shpargalkablog.ru/2013/07/replace.h
   <div data-dd="26" data-mm="12" data-yyyy="2019" data-text="Новолуние. Цветам необходимо обеспечить полный покой"></div>
 
   <!-- 2020 -->
-  <div data-dd="3" data-mm="1" data-yyyy="2020" data-text="Первая четверть. Рекомендуется выполнять практически все виды работ, кроме подкормки."></div>
+  <div data-dd="3" data-mm="1" data-yyyy="2020" data-text="bnn">{{date}}</div>
   <div data-dd="10" data-mm="1" data-yyyy="2020" data-text="Полнолуние. Подкормка, пересадка и черенкование пройдут успешно"></div>
   <div data-dd="17" data-mm="1" data-yyyy="2020" data-text="Третья четверть. Рекомендуется постепенно сокращать операции по уходу"></div>
   <div data-dd="25" data-mm="1" data-yyyy="2020" data-text="Новолуние. Цветам необходимо обеспечить полный покой"></div>
@@ -335,7 +449,7 @@ JavaScript примеры" data-link="http://shpargalkablog.ru/2013/07/replace.h
 
   <!-- 2021 -->
   <div data-dd="6" data-mm="1" data-yyyy="2021" data-text="Третья четверть. Рекомендуется постепенно сокращать операции по уходу"></div>
-  <div data-dd="13" data-mm="1" data-yyyy="2021" data-text="Новолуние"></div>
+  <div data-dd="13" data-mm="1" data-yyyy="2021" data-text="Новолуние. Цветам необходимо обеспечить полный покой"></div>
   <div data-dd="21" data-mm="1" data-yyyy="2021" data-text="Первая четверть. Рекомендуется выполнять практически все виды работ, кроме подкормки."></div>
   <div data-dd="28" data-mm="1" data-yyyy="2021" data-text="Полнолуние"></div>
 
@@ -457,9 +571,10 @@ JavaScript примеры" data-link="http://shpargalkablog.ru/2013/07/replace.h
   <div data-dd="16" data-mm="12" data-yyyy="2022" data-text="Третья четверть. Рекомендуется постепенно сокращать операции по уходу"></div>
   <div data-dd="23" data-mm="12" data-yyyy="2022" data-text="Новолуние"></div>
   <div data-dd="30" data-mm="12" data-yyyy="2022" data-text="Первая четверть. Рекомендуется выполнять практически все виды работ, кроме подкормки."></div>
-  
 </div>
 
+<script src="https://static.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script>
 function calendarBig(year) {
 for (var m = 0; m <= 11; m++) {
@@ -542,7 +657,119 @@ document.querySelector('#calendarBig > thead td:nth-child(1)').onclick = calenda
 document.querySelector('#calendarBig > thead td:nth-child(3)').onclick = calendarBigG;
 function calendarBigG() {calendarBig(this.innerHTML.replace(/[^\d]/gi, ''));}
 
+function calendarBig2(year) {
+for (var m = 0; m <= 11; m++) {
+var D = new Date(year,[m],1),
+    Dlast = new Date(D.getFullYear(),D.getMonth()+1,0).getDate(),
+    DNlast = new Date(D.getFullYear(),D.getMonth(),Dlast).getDay(),
+    DNfirst = new Date(D.getFullYear(),D.getMonth(),1).getDay(),
+    calendar = '<tr>';
+
+if (DNfirst != 0) {
+  for(var  i = 1; i < DNfirst; i++) calendar += '<td>';
+}else{
+  for(var  i = 0; i < 6; i++) calendar += '<td>';
+}
+
+for(var  i = 1; i <= Dlast; i++) {
+  if (i == new Date().getDate() && D.getFullYear() == new Date().getFullYear() && D.getMonth() == new Date().getMonth()) {
+    calendar += '<td class="today">' + i;
+  }else{
+    if (
+        (i == 1 && D.getMonth() == 0 && ((D.getFullYear() > 1897 && D.getFullYear() < 1930) || D.getFullYear() > 1947)) ||
+        (i == 2 && D.getMonth() == 0 && D.getFullYear() > 1992) ||
+        ((i == 3 || i == 4 || i == 5 || i == 6 || i == 8) && D.getMonth() == 0 && D.getFullYear() > 2004) ||
+        (i == 7 && D.getMonth() == 0 && D.getFullYear() > 1990) ||
+        (i == 23 && D.getMonth() == 1 && D.getFullYear() > 2001) ||
+        (i == 8 && D.getMonth() == 2 && D.getFullYear() > 1965) ||
+        (i == 1 && D.getMonth() == 4 && D.getFullYear() > 1917) ||
+        (i == 9 && D.getMonth() == 4 && D.getFullYear() > 1964) ||
+        (i == 12 && D.getMonth() == 5 && D.getFullYear() > 1990) ||
+        (i == 7 && D.getMonth() == 10 && (D.getFullYear() > 1926 && D.getFullYear() < 2005)) ||
+        (i == 8 && D.getMonth() == 10 && (D.getFullYear() > 1926 && D.getFullYear() < 1992)) ||
+        (i == 4 && D.getMonth() == 10 && D.getFullYear() > 2004)
+       ) {
+      calendar += '<td class="holiday">' + i;
+    }else{
+      calendar += '<td>' + i;
+    }
+  }
+  if (new Date(D.getFullYear(),D.getMonth(),i).getDay() == 0) {
+    calendar += '<tr>';
+  }
+}
+
+if (DNlast != 0) {
+  for(var  i = DNlast; i < 7; i++) calendar += '<td>';
+}
+
+document.querySelector('#calendarBig2 table[data-m="' + [m] + '"] tbody').innerHTML = calendar;
+document.querySelector('#calendarBig2 > thead td:nth-child(2)').innerHTML = 'Календарь полива на ' + year + ' год';
+document.querySelector('#calendarBig2 > thead td:nth-child(1)').innerHTML = 'Календарь на ' + parseFloat(parseFloat(year)-1) + ' год';
+document.querySelector('#calendarBig2 > thead td:nth-child(3)').innerHTML = 'Календарь на ' + parseFloat(parseFloat(year)+1) + ' год';
+
+// абзац создаёт сообщения
+for (var k = 1; k <= document.querySelectorAll('#calendarTable2 div').length; k++) {
+  var myD = document.querySelectorAll('#calendarBig2 table td'),
+      my = document.querySelector('#calendarTable2 div:nth-child(' + [k] + ')');
+  for (var i = 0; i < myD.length; i++) {
+    if (my.dataset.yyyy) {
+      if (myD[i].innerHTML == my.dataset.dd && myD[i].parentNode.parentNode.parentNode.dataset.m == (my.dataset.mm - 1) && year == my.dataset.yyyy) {
+        myD[i].title = my.dataset.text;
+        if (my.dataset.link) {
+          myD[i].innerHTML = '<a href="' + my.dataset.link + '" target="_blank">' + myD[i].innerHTML + '</a>';
+        }
+      }
+    }else{
+      if (myD[i].innerHTML == my.dataset.dd && myD[i].parentNode.parentNode.parentNode.dataset.m == (my.dataset.mm - 1)) {
+        myD[i].title = my.dataset.text;
+        if (my.dataset.link) {
+          myD[i].innerHTML = '<a href="' + my.dataset.link + '" target="_blank">' + myD[i].innerHTML + '</a>';
+        }
+      }
+    }
+  }
+}
+
+}}
+
+calendarBig2(new Date().getFullYear());
+document.querySelector('#calendarBig2 > thead td:nth-child(1)').onclick = calendarBigG2;
+document.querySelector('#calendarBig2 > thead td:nth-child(3)').onclick = calendarBigG2;
+function calendarBigG2() {calendarBig2(this.innerHTML.replace(/[^\d]/gi, ''));}
+
+// function selected() {
+//   var x = document.getElementById("section").value;
+//   document.getElementById("selectedOption").innerHTML = "Вы выбрали: " + x;
+//   // let form = document.getElementById("form");
+//   // form.submit();
+// }
+
+function selected() {
+      
+    var input, filter, user, box, p, i;
+    input = document.getElementById("section").value;
+    document.getElementById("selectedOption").innerHTML = "Вы выбрали: " + input;
+    filter = input;
+    user = document.getElementById("calendarTable2");
+    box = user.getElementsByClassName("box");
+    for (i = 0; i < box.length; i++) {
+       console.log(box[i]);
+        p = box[i].dataset.text;
+        
+        if ((p === filter)){
+            box[i].style.display = "";
+        } else {
+          delete box[i].dataset.text;
+          delete box[i].dataset.yyyy;
+          delete box[i].dataset.mm;
+          delete box[i].dataset.dd;
+            box[i].style.display = "none";
+            // getElementsByClassName("box")[i].replaceWith(box[i]);
+          }
+  }
+}
+
 </script>
 </body>
 </html>
-
